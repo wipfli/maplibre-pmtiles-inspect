@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Mapbox GL Inspect</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+
+    <script
+        src='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/v1.4.3/maplibre-gl-inspect.min.js'></script>
+    <link href='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/v1.4.3/maplibre-gl-inspect.css'
+        rel='stylesheet' />
+
+    <script src="https://unpkg.com/pmtiles@1.0.0/dist/index.js"></script>
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='map'></div>
+    <script>
+        let cache = new pmtiles.ProtocolCache();
+        maplibregl.addProtocol("pmtiles", cache.protocol);
+        var map = new maplibregl.Map({
+            container: 'map',
+            style: {
+                "version": 8,
+                "name": "Basic preview",
+                "sources": {
+                    "shortbread": {
+                        "type": "vector",
+                        "tiles": ["pmtiles://https://wipfli.github.io/swiss-map/output.pmtiles/{z}/{x}/{y}"],
+                        "maxzoom": 14
+                    }
+                },
+                "glyphs": "https://tiles.ballometer.io/fonts/{fontstack}/{range}.pbf",
+                "layers": [
+                    {
+                        "id": "background",
+                        "type": "background",
+                        "layout": { "visibility": "visible" },
+                        "paint": { "background-color": "rgba(240, 244, 247, 1)" }
+                    }
+                ],
+                "id": "basic-preview"
+            },
+            center: [-74.50, 40],
+            zoom: 3,
+            hash: true
+        });
+        map.addControl(new maplibregl.NavigationControl());
+        map.addControl(new MaplibreInspect({
+        }));
+    </script>
+
+</body>
+
+</html>
