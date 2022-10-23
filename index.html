@@ -14,7 +14,7 @@
     <link href='https://github.com/acalcutt/maplibre-gl-inspect/releases/download/v1.4.3/maplibre-gl-inspect.css'
         rel='stylesheet' />
 
-    <script src="https://unpkg.com/pmtiles@1.0.0/dist/index.js"></script>
+    <script src="https://unpkg.com/pmtiles@2.2.0/dist/index.js"></script>
 
 
     <style>
@@ -36,8 +36,8 @@
 
     <div id='map'></div>
     <script>
-        let cache = new pmtiles.ProtocolCache();
-        maplibregl.addProtocol("pmtiles", cache.protocol);
+        let protocol = new pmtiles.Protocol();
+        maplibregl.addProtocol("pmtiles", protocol.tile);
         var map = new maplibregl.Map({
             container: 'map',
             style: {
@@ -61,8 +61,8 @@
                 ],
                 "id": "basic-preview"
             },
-            center: [-74.50, 40],
-            zoom: 3,
+            center: [8.19082, 47.28909],
+            zoom: 14.3,
             hash: true
         });
         map.addControl(new maplibregl.NavigationControl());
